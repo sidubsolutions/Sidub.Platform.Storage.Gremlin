@@ -1,0 +1,133 @@
+﻿/*
+ * Sidub Platform - Storage - Gremlin
+ * Copyright (C) 2024 Sidub Inc.
+ * All rights reserved.
+ *
+ * This file is part of Sidub Platform - Storage - Gremlin (the "Product").
+ *
+ * The Product is dual-licensed under:
+ * 1. The GNU Affero General Public License version 3 (AGPLv3)
+ * 2. Sidub Inc.'s Proprietary Software License Agreement (PSLA)
+ *
+ * You may choose to use, redistribute, and/or modify the Product under
+ * the terms of either license.
+ *
+ * The Product is provided "AS IS" and "AS AVAILABLE," without any
+ * warranties or conditions of any kind, either express or implied, including
+ * but not limited to implied warranties or conditions of merchantability and
+ * fitness for a particular purpose. See the applicable license for more
+ * details.
+ *
+ * See the LICENSE.txt file for detailed license terms and conditions or
+ * visit https://sidub.ca/licensing for a copy of the license texts.
+ */
+
+#region Imports
+
+using Sidub.Platform.Core.Entity;
+using Sidub.Platform.Core.Services;
+using Sidub.Platform.Filter.Parsers.Gremlin;
+using Sidub.Platform.Filter.Services;
+using Sidub.Platform.Storage.Commands;
+using Sidub.Platform.Storage.Commands.Responses;
+using Sidub.Platform.Storage.Services.Gremlin;
+
+#endregion
+
+namespace Sidub.Platform.Storage.Handlers.Gremlin.Factories
+{
+
+    /// <summary>
+    /// Factory class for creating <see cref="EntitySaveRelationCommandHandler{TEntity, TRelatedEntity}"/> instances.
+    /// </summary>
+    public class EntitySaveRelationCommandHandlerFactory : ICommandHandlerFactory<GremlinStorageConnector>
+    {
+
+        #region Member variables
+
+        private readonly IServiceRegistry _metadataService;
+        private readonly GremlinDataProviderService _dataProviderService;
+        private readonly IEntitySerializerService _entitySerializerService;
+        private readonly IFilterService<GremlinFilterConfiguration> _filterService;
+        private readonly IEntityPartitionService _entityPartitionService;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntitySaveRelationCommandHandlerFactory"/> class.
+        /// </summary>
+        /// <param name="metadataService">The service registry for metadata.</param>
+        /// <param name="dataProviderService">The data provider service for Gremlin.</param>
+        /// <param name="entitySerializerService">The entity serializer service.</param>
+        /// <param name="filterService">The filter service for Gremlin.</param>
+        /// <param name="entityPartitionService">The entity partition service.</param>
+        public EntitySaveRelationCommandHandlerFactory(IServiceRegistry metadataService, GremlinDataProviderService dataProviderService, IEntitySerializerService entitySerializerService, IFilterService<GremlinFilterConfiguration> filterService, IEntityPartitionService entityPartitionService)
+        {
+            _metadataService = metadataService;
+            _dataProviderService = dataProviderService;
+            _entitySerializerService = entitySerializerService;
+            _filterService = filterService;
+            _entityPartitionService = entityPartitionService;
+        }
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Determines whether the specified command is handled by this factory.
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command.</typeparam>
+        /// <typeparam name="TResult">The type of the command result.</typeparam>
+        /// <returns><c>true</c> if the command is handled; otherwise, <c>false</c>.</returns>
+        public bool IsHandled<TCommand, TResult>()
+            where TCommand : ICommand<TResult>
+            where TResult : ICommandResponse
+        {
+            var T = typeof(TCommand);
+
+            if (typeof(ISaveEntityRelationCommand).IsAssignableFrom(T))
+                return true;
+
+            // ensure command conforms to AzureSaveBlobCommand<TEntity> where TEntity : IEntity...
+            if (T.IsGenericType && T.GetGenericTypeDefinition() == typeof(SaveEntityRelationCommand<,>) && typeof(IEntity).IsAssignableFrom(T.GenericTypeArguments.First()))
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Creates a command handler for the specified command and result types.
+        /// </summary>
+        /// <typeparam name="TCommand">The type of the command.</typeparam>
+        /// <typeparam name="TResult">The type of the command result.</typeparam>
+        /// <returns>An instance of the command handler.</returns>
+        /// <exception cref="Exception">Thrown when the specified command is not handled by this factory.</exception>
+        public ICommandHandler<TCommand, TResult> Create<TCommand, TResult>()
+            where TCommand : ICommand<TResult>
+            where TResult : ICommandResponse
+        {
+            if (!IsHandled<TCommand, TResult>())
+                throw new Exception("Unhandled type.");
+
+            // retrieve TEntity from AzureSaveBlobCommand<TEntity>... note prior validation has ensured this is of IEntity type...
+            var genericArgs = typeof(TCommand).GenericTypeArguments;
+            var parentType = genericArgs[0];
+            var relatedType = genericArgs[1];
+
+            var handlerType = typeof(EntitySaveRelationCommandHandler<,>).MakeGenericType(new[] { parentType, relatedType });
+            var handlerParameters = new object[] { _metadataService, _dataProviderService, _entitySerializerService, _filterService, _entityPartitionService };
+            var handler = Activator.CreateInstance(handlerType, handlerParameters);
+
+            if (handler is not ICommandHandler<TCommand, TResult> handlerCast)
+                throw new Exception("Command handler cannot cast to ICommandHandler<TCommand, TResult>; check factory validation and handler instantiation.");
+
+            return handlerCast;
+        }
+
+        #endregion
+    }
+
+}

@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage.Gremlin", "Storage.Gremlin\Storage.Gremlin.csproj", "{0B7F37F3-7518-400E-806D-93E35A886B5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage.Gremlin.Test", "Storage.Gremlin.Test\Storage.Gremlin.Test.csproj", "{614333E5-8993-4685-A432-AA9E7B9A3C99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2B2CD1D-5768-4F12-924B-8C24CEB88460}"
+	ProjectSection(SolutionItems) = preProject
+		.runsettings = .runsettings
+		.runsettings.template = .runsettings.template
+		azure-pipelines.yml = azure-pipelines.yml
+		CONTRIBUTING.txt = CONTRIBUTING.txt
+		Storage.Gremlin.sln.licenseheader = Storage.Gremlin.sln.licenseheader
+		docfx.json = docfx.json
+		GitVersion.yml = GitVersion.yml
+		icon.png = icon.png
+		LICENSE-AGPLV3.txt = LICENSE-AGPLV3.txt
+		LICENSE-PROPRIETARY.txt = LICENSE-PROPRIETARY.txt
+		LICENSE.txt = LICENSE.txt
+		PRIVACY.txt = PRIVACY.txt
+		README.md = README.md
+		TERMS.txt = TERMS.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		LamaDebug|Any CPU = LamaDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.LamaDebug|Any CPU.ActiveCfg = LamaDebug|Any CPU
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.LamaDebug|Any CPU.Build.0 = LamaDebug|Any CPU
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7F37F3-7518-400E-806D-93E35A886B5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.LamaDebug|Any CPU.ActiveCfg = LamaDebug|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.LamaDebug|Any CPU.Build.0 = LamaDebug|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614333E5-8993-4685-A432-AA9E7B9A3C99}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BAD7EED-A026-47FA-8C59-074D3157C505}
+	EndGlobalSection
+EndGlobal

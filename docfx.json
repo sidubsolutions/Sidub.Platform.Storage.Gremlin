@@ -1,0 +1,16 @@
+{
+  "metadata": [
+    // Filter...
+    {
+      "src": [
+        {
+          "files": [ "**/*.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ],
+          "src": "./Storage.Gremlin/"
+        }
+      ],
+      "dest": "./_DocFX/Storage.Gremlin/",
+      "shouldSkipMarkup": false
+    }
+  ]
+}

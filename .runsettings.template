@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+		<GREMLIN_URL>sidub.gremlin.cosmos.azure.com</GREMLIN_URL>
+		<GREMLIN_KEY>AMA7jaQOaJ2aXaJiHBEi1eIFXj7jIaj8RUkjLE8a2nLen6ajYVMZ2W9Rw2imcFaRPEVJKc1TynArXBbzBOPxoQ==</GREMLIN_KEY>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

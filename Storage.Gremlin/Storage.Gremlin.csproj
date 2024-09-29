@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<AssemblyName>Sidub.Platform.Storage.Gremlin</AssemblyName>
+		<RootNamespace>Sidub.Platform.Storage</RootNamespace>
+
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+
+		<!-- Workaround: https://github.com/dotnet/sourcelink - Azure Repos not supporting symbol packages -->
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\icon.png" Pack="true" PackagePath="\" Visible="False" />
+		<None Include="..\LICENSE.txt" Pack="true" PackagePath="\" Visible="False" />
+		<None Include="..\README.md" Pack="true" PackagePath="\" Visible="False" />
+
+		<PackageReference Include="Gremlin.Net" Version="3.7.2" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+		<PackageReference Include="Sidub.Platform.Authentication" Version="1.0.17" />
+		<PackageReference Include="Sidub.Platform.Filter" Version="1.1.10" />
+		<PackageReference Include="Sidub.Platform.Storage" Version="1.0.19" />
+	</ItemGroup>
+
+</Project>
